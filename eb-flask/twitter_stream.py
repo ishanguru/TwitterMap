@@ -18,9 +18,21 @@ class listener(StreamListener):
         print(status)
 
 def parse_data(data):
-    # Create elastic search object here
     json_data_file = json.loads(data)
-    # contents = json_data_file['text']
+    contents = json_data_file['text']
+
+    # Create elastic search object here
+    # Get the keywords from the elastic search object
+
+    # if the received tweet contains any of the keywords, then parse the tweet for its
+    # coordinates, and insert it into the EB object with needed information like id,
+    # datetime, timestamp, author, screen_name
+
+    # you might wanna check these out when you parse the tweet:
+    # https://dev.twitter.com/overview/api/places - coordinates
+    # https://dev.twitter.com/overview/api/users - most of other info
+    # Complete JSON_FORMAT: https://dev.twitter.com/rest/reference/get/search/tweets
+
     location = json_data_file["place"]
     coordinates = json_data_file["coordinates"]
     # print(location)
@@ -35,9 +47,8 @@ def parse_data(data):
             print(object)
             longitude = longitude + object[0]
             latitude = latitude + object[1]
-        print(longitude/len(coord_array))
-        print(latitude/len(coord_array))
-        #     Then we can parse the data
+        print(longitude / len(coord_array))
+        print(latitude / len(coord_array))
 
 # the "car" in the track statement below is what we'll change to the required imput search keyword
 
@@ -47,6 +58,18 @@ if __name__ == '__main__':
     auth.set_access_token(accessToken, accessSecret)
     twitterStream = Stream(auth, listener())
     twitterStream.filter(track=["car"])
+
+
+
+
+
+
+
+
+
+
+
+
 
     # for friend in tweepy.Cursor(api.friends).items():
     #     process_or_store(friend._json)
