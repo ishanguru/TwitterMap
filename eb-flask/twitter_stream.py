@@ -22,7 +22,7 @@ def parse_data(data):
     contents = json_data_file['text']
 
     # Create elastic search object here
-    
+
     # Get the keywords from the elastic search object
 
     # if the received tweet contains any of the keywords, then parse the tweet for its
