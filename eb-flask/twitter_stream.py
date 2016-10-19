@@ -11,7 +11,10 @@ accessSecret="5d2Knn1NyR5Vfzsk1VSKziPubURmn7AXzOs6LOeZO96Dl"
 class listener(StreamListener):
 
     def on_data(self, data):
-        parse_data(data)
+        try:
+            parse_data(data)
+        except:
+            print("Error")
         return(True)
 
     def on_error(self, status):
@@ -19,10 +22,7 @@ class listener(StreamListener):
 
 def parse_data(data):
     json_data_file = json.loads(data)
-    contents = json_data_file['text']
-
     # Create elastic search object here
-
     # Get the keywords from the elastic search object
 
     # if the received tweet contains any of the keywords, then parse the tweet for its
@@ -36,10 +36,11 @@ def parse_data(data):
 
     location = json_data_file["place"]
     coordinates = json_data_file["coordinates"]
-    # print(location)
-    # print(data);
+
     if coordinates is not None:
         print(json_data_file["coordinates"])
+        final_longitude = json_data_file["coordinates"][0]
+        final_latitude = json_data_file["coordinates"][0]
     elif location is not None:
         coord_array = json_data_file["place"]["bounding_box"]["coordinates"][0]
         longitude = 0;
@@ -50,8 +51,16 @@ def parse_data(data):
             latitude = latitude + object[1]
         print(longitude / len(coord_array))
         print(latitude / len(coord_array))
+        final_longitude = longitude / len(coord_array)
+        final_latitude = latitude / len(coord_array)
 
-# the "car" in the track statement below is what we'll change to the required imput search keyword
+    tweet = json_data_file["text"]
+    author = json_data_file["user"]["name"]
+    timestamp = json_data_file["created_at"]
+
+    # TODO: The above 4 variables need to be stored as documents in elastic search, so that we can filter on them
+
+# the "car" in the track statement below is what we'll change to the required input search keyword
 
 if __name__ == '__main__':
     # listener = StdOutListener()
@@ -60,20 +69,3 @@ if __name__ == '__main__':
     twitterStream = Stream(auth, listener())
     twitterStream.filter(track=["car"])
 
-
-
-
-
-
-
-
-
-
-
-
-
-    # for friend in tweepy.Cursor(api.friends).items():
-    #     process_or_store(friend._json)
-
-    # stream = Stream(auth, listener)
-    # stream.filter(track=['#nyc'])
