@@ -22,17 +22,9 @@ class listener(StreamListener):
 
 def parse_data(data):
     json_data_file = json.loads(data)
-    # Create elastic search object here
-    # Get the keywords from the elastic search object
+    tweetHandler = TwitterHandler()
 
-    # if the received tweet contains any of the keywords, then parse the tweet for its
-    # coordinates, and insert it into the EB object with needed information like id,
-    # datetime, timestamp, author, screen_name
-
-    # you might wanna check these out when you parse the tweet:
-    # https://dev.twitter.com/overview/api/places - coordinates
-    # https://dev.twitter.com/overview/api/users - most of other info
-    # Complete JSON_FORMAT: https://dev.twitter.com/rest/reference/get/search/tweets
+    # Pass in arg into TwitterHandler as an array, of all the things the user inputs to search
 
     location = json_data_file["place"]
     coordinates = json_data_file["coordinates"]
@@ -51,21 +43,23 @@ def parse_data(data):
             latitude = latitude + object[1]
         print(longitude / len(coord_array))
         print(latitude / len(coord_array))
+
         final_longitude = longitude / len(coord_array)
         final_latitude = latitude / len(coord_array)
 
+    tweetId = json_data_file['id_str']
     tweet = json_data_file["text"]
     author = json_data_file["user"]["name"]
     timestamp = json_data_file["created_at"]
 
-    # TODO: The above 4 variables need to be stored as documents in elastic search, so that we can filter on them
-
-# the "car" in the track statement below is what we'll change to the required input search keyword
+    tweetHandler.insertTweet(tweetId, final_longitude, final_latitude, tweet, author, timestamp)
 
 if __name__ == '__main__':
-    # listener = StdOutListener()
+
     auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
     auth.set_access_token(accessToken, accessSecret)
     twitterStream = Stream(auth, listener())
-    twitterStream.filter(track=["car"])
+    twitterStream.filter(locations=[-180,-90, 180, 90])
+
+    #The location specified above gets all tweets, we can then filter and store based on what we want
 

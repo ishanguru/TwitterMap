@@ -6,7 +6,7 @@ class TwitterHandler:
 	
 	def __init__(self, arg):
 		super(TwitterHandler, self).__init__()
-		self.es = ElasticsearchServices()
+		self.es = ElasticSearchServices()
 		self.index = "twitterMapIndex"
 		self.doc_type = "allTweets"
 		self.size = 20
