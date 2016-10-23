@@ -5,11 +5,23 @@ from ElasticSearchServices import ElasticSearchServices
 class TwitterHandler:
 	
 	def __init__(self):
-		# super(TwitterHandler, self).__init__()
 		self.es = ElasticSearchServices()
 		self.index = "twittermapindex"
 		self.doc_type = "alltweets"
-		# self.size = 20
+
+	def getTweet(self, keyword):
+		body = {
+			"query": {
+				"match": {
+					"content": keyword
+				}
+			}
+		}
+		
+		size = 10000
+		result = self.es.search(self.index, self.doc_type, body, size)
+
+		return result
 
 	def insertTweet(self, id, longitude, latitude, tweet, author, timestamp):
 		body = {
@@ -37,10 +49,11 @@ if __name__ == '__main__':
 
 	tweetId = 1234
 	tweet = "Ishan is cool"
-	author = "Ishan"
+	author = "Ishan2"
 	timestamp = None
 
-	tweetHandler.insertTweet(tweetId, final_longitude, final_latitude, tweet, author, timestamp)
+	# print(tweetHandler.insertTweet(tweetId, final_longitude, final_latitude, tweet, author, timestamp))
+	print(tweetHandler.getTweet("Ishan"))
 
-	print("Inserted")
+	# print("Inserted")
 '''

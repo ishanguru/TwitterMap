@@ -17,11 +17,13 @@ class ElasticSearchServices:
         	)
 
     def store_data(self, index, doc_type, body):
-    	results = self.es.index(
+        results = self.es.index(
     			index=index, 
     			doc_type=doc_type, 
     			body=body
     		)
+
+        return results
 
     def search(self, index, doc_type, body, size):
     	results = self.es.search(
