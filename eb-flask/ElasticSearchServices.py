@@ -2,17 +2,17 @@
 
 from elasticsearch import Elasticsearch
 
-HOSTADDRESS = ''
-USERNAME = ''
-PASSWORD = ''
-PORT = ''
+HOSTADDRESS = 'search-twittermap-3uaivoajhtahixeeu6go6ascfi.us-west-2.es.amazonaws.com'
+# USERNAME = ''
+# PASSWORD = ''
+PORT = '80'
 
 class ElasticSearchServices:
 
     def __init__(self):
         self.es = Elasticsearch(
         		[HOSTADDRESS],
-        		http_auth=(USERNAME,PASSWORD),
+        		# http_auth=(USERNAME,PASSWORD),
         		port=PORT
         	)
 
@@ -35,3 +35,4 @@ class ElasticSearchServices:
 
     def total_hits(results):
     	return results['hits']['total']
+

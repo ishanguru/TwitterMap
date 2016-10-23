@@ -3,10 +3,11 @@ import json
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 
-consumerKey="MdcdXYuq2MUYkI84xmkWW6OLJ"
-consumerSecret="kpRq1uRnoYPez2mR84h3JIkrSC4YyFe9EjCHmi3MFmUY9Mn4Gv"
+consumerKey="CPZFTDBHjLW7ZNXcvPLkB063f"
+consumerSecret="2aiO9j6alC0wKWYOLTmNbo8wCGpRGu0O4QHWAork70gYCZMEk4"
 accessToken="786036603332329472-GVyUTbel8v80MlM3iii5QhZuGL1biO0"
 accessSecret="5d2Knn1NyR5Vfzsk1VSKziPubURmn7AXzOs6LOeZO96Dl"
+KEYWORDS = ['chelsea', 'premier', 'pokemon', 'fruit', 'food', 'coffee', 'pizza', 'california']
 
 class listener(StreamListener):
 
@@ -15,16 +16,16 @@ class listener(StreamListener):
             parse_data(data)
         except:
             print("Error")
+
         return(True)
 
     def on_error(self, status):
-        print(status)
+        errorMessage = "Error - Status code " + str(status)
+        print(errorMessage)
 
 def parse_data(data):
     json_data_file = json.loads(data)
     tweetHandler = TwitterHandler()
-
-    # Pass in arg into TwitterHandler as an array, of all the things the user inputs to search
 
     location = json_data_file["place"]
     coordinates = json_data_file["coordinates"]
@@ -59,7 +60,8 @@ if __name__ == '__main__':
     auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
     auth.set_access_token(accessToken, accessSecret)
     twitterStream = Stream(auth, listener())
-    twitterStream.filter(locations=[-180,-90, 180, 90])
+    # twitterStream.filter(locations=[-180,-90, 180, 90])
+    twitterStream.filter(track=KEYWORDS)
 
     #The location specified above gets all tweets, we can then filter and store based on what we want
 
