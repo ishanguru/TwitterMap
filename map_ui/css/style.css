@@ -1,0 +1,13 @@
+#map {
+        width: 100%;
+        height: 800px;
+        background-color: grey;
+ }
+
+#keyword_select_form {
+	width: 27%;
+	height: 20%;
+	position: absolute;
+	top: 1%;
+	right: 1%;
+}
