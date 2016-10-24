@@ -6,7 +6,7 @@
 
 #keyword_select_form {
 	width: 27%;
-	height: 20%;
+	height: 26%;
 	position: absolute;
 	top: 1%;
 	right: 1%;
@@ -21,8 +21,9 @@
 #drop-down_select {
 	width: 40%;
 	height: 20%;
+	margin-left: 10%;
 }
 
 #buttons {
-	margin-left: 30%;
+	margin-left: 20%;
 }
