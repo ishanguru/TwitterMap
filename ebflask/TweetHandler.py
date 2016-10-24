@@ -13,7 +13,7 @@ class TwitterHandler:
 		body = {
 			"query": {
 				"match": {
-					"content": keyword
+					"_all": keyword
 				}
 			}
 		}
@@ -44,16 +44,16 @@ class TwitterHandler:
 if __name__ == '__main__':
 	tweetHandler = TwitterHandler()
 
-	final_longitude = 1234
-	final_latitude = 1234
-
-	tweetId = 1234
-	tweet = "Ishan is cool"
-	author = "Ishan2"
-	timestamp = None
+	# final_longitude = 1234
+	# final_latitude = 1234
+    #
+	# tweetId = 1234
+	# tweet = "Ishan is cool"
+	# author = "Ishan2"
+	# timestamp = None
 
 	# print(tweetHandler.insertTweet(tweetId, final_longitude, final_latitude, tweet, author, timestamp))
-	print(tweetHandler.getTweet("Ishan"))
+	print(tweetHandler.getTweet("coffee"))
 
 	# print("Inserted")
 '''

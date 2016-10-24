@@ -1,5 +1,4 @@
 # This is the file where we connect to ES + find and insert data
-
 from elasticsearch import Elasticsearch
 
 HOSTADDRESS = 'search-twittermap-3uaivoajhtahixeeu6go6ascfi.us-west-2.es.amazonaws.com'
