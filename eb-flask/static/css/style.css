@@ -10,8 +10,19 @@
 	position: absolute;
 	top: 1%;
 	right: 1%;
+	background-color: white;
+	padding: 2%;
 }
 
 #warning {
 	color: red;
+}
+
+#drop-down_select {
+	width: 40%;
+	height: 20%;
+}
+
+#buttons {
+	margin-left: 30%;
 }

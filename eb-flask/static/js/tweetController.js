@@ -31,7 +31,7 @@ function drop_maker(latitude, longitude, source_object) {
 	var curr_lat_and_lng = {lat: latitude, lng: longitude};
 	var new_marker = new google.maps.Marker({
     	position: curr_lat_and_lng,
-    	animation: google.maps.Animation.DROP,
+    	//animation: google.maps.Animation.DROP,
     	map: map
   	});
   	new_marker.addListener('click', function() {
