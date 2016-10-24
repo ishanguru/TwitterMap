@@ -1,10 +1,14 @@
 # This is the file where we connect to ES + find and insert data
+import ConfigParser
 from elasticsearch import Elasticsearch
 
-HOSTADDRESS = 'search-twittermap-3uaivoajhtahixeeu6go6ascfi.us-west-2.es.amazonaws.com'
-# USERNAME = ''
-# PASSWORD = ''
-PORT = '80'
+config = ConfigParser.ConfigParser()
+config.readfp(open(r'./configurations.txt'))
+
+HOSTADDRESS=config.get('ES Instance', 'HOSTADDRESS')
+PORT=config.get('ES Instance', 'PORT')
+USERNAME=config.get('ES Instance', 'USERNAME')
+PASSWORD=config.get('ES Instance', 'PASSWORD')
 
 class ElasticSearchServices:
 

@@ -1,4 +1,5 @@
 import json
+import thread
 from flask import Flask
 from TweetListener import *
 from TweetHandler import TwitterHandler
@@ -18,13 +19,12 @@ def api_root():
 def searchKeyword(keyword):
     searchTweets = TwitterHandler()
     result = searchTweets.getTweets(keyword)
-    # print(result)
     return json.dumps(result)
 
 # run the app.
 if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
     # removed before deploying a production app.
-    # startTwitterRequests()
+    thread.start_new_thread(startTwitterRequests, ())
     app.debug = True
     app.run()
