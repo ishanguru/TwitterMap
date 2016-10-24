@@ -9,6 +9,7 @@ consumerSecret="2aiO9j6alC0wKWYOLTmNbo8wCGpRGu0O4QHWAork70gYCZMEk4"
 accessToken="786036603332329472-GVyUTbel8v80MlM3iii5QhZuGL1biO0"
 accessSecret="5d2Knn1NyR5Vfzsk1VSKziPubURmn7AXzOs6LOeZO96Dl"
 KEYWORDS = ['chelsea', 'premier', 'pokemon', 'fruit', 'food', 'coffee', 'pizza', 'california']
+REQUEST_LIMIT = 420
 
 class TweetListener(StreamListener):
 
@@ -23,9 +24,10 @@ class TweetListener(StreamListener):
 
     def on_error(self, status):
         errorMessage = "Error - Status code " + str(status)
-        # if status == 420:
-        #     exit()
         print(errorMessage)
+        if status == REQUEST_LIMIT:
+            print("Request limit reached. Trying again...")
+            exit()
 
 def parse_data(data):
     json_data_file = json.loads(data)
