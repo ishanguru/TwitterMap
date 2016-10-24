@@ -16,7 +16,7 @@ function initMap() {
 function load_tweet(list) {
 	var object_list = list.hits.hits; 
 	console.log(JSON.stringify(object_list));
-	console.log(sample);
+	// console.log(sample);
 	for (var i = 0; i < object_list.length; i++) {
 		curr_latitude = object_list[i]._source.latitude;
 		curr_longitude = object_list[i]._source.longitude;
@@ -69,7 +69,7 @@ function search_by_keyword() {
 	console.log(selected_key)
 	console.log(selected_keyword.value);
 	$.ajax({
-		url: 'localhost:5000/search/' + selected_keyword.value,
+		url: '/search/' + selected_keyword.value,
 		type: 'GET',
 		success: function(response) {
 			console.log(JSON.stringify(response));
@@ -108,25 +108,3 @@ $(document).ready(function() {
 
 });
 
-
-
-
-
-
-
-/*
-EXTRA CODES:  
-function scroll_after_search(scrollId) {
-	$.ajax({
-		url: '/scroll/' + scrollId,
-		type: 'GET',
-		// data:;  what we pass into the scroll function
-
-		success: function(response) {
-			// if success, call the load_tweet function
-			console.log(JSON.stringify(response));
-			load_tweet(response);
-		}
-	});
-}
-*/
