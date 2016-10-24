@@ -1,6 +1,5 @@
 var map = "";
 var marker_list = [];
-var sample = {"hits": {"hits": [{"_score": 0.57081455, "_type": "alltweets", "_id": "AVf0NMCuW2-3j40lpB7-", "_source": {"author": "Putu Sukarata", "timestamp": "Mon Oct 24 01:01:20 +0000 2016", "longitude": 115.06630249999999, "latitude": -8.440309, "message": "Morning...cup a coffee", "id": "790357471692853248"}, "_index": "twittermapindex"}, {"_score": 0.40772468, "_type": "alltweets", "_id": "AVf0MprLW2-3j40lpB72", "_source": {"author": "Sareena", "timestamp": "Mon Oct 24 00:58:59 +0000 2016", "longitude": -79.861034, "latitude": 35.1704985, "message": "Having low coffee funds is a good reason to cut back this week. I really thought that $60 on my card would last more than a week. Damn", "id": "790356881101520896"}, "_index": "twittermapindex"}, {"_score": 0.3728585, "_type": "alltweets", "_id": "AVf0QR-bW2-3j40lpB8O", "_source": {"author": "jasmin \u2741 s\u00f8sa", "timestamp": "Mon Oct 24 01:14:50 +0000 2016", "longitude": -84.433106, "latitude": 33.7671945, "message": "when ur @DunkinDonuts iced coffee tastes like straight UP sweet tea/rotten milk & ur bagel tastes like PLAYDOH. y have u forsaken me dd???!!", "id": "790360871600087040"}, "_index": "twittermapindex"}, {"_score": 0.3728585, "_type": "alltweets", "_id": "AVf0QY88W2-3j40lpB8V", "_source": {"author": "B e t h y", "timestamp": "Mon Oct 24 01:15:19 +0000 2016", "longitude": 150.931975, "latitude": -33.848244, "message": "Love knowing that ever time I order a coffee it's going to be good!! #whyisithardtogetgoodcoffeeintheuk \ud83e\udd14", "id": "790360992089649152"}, "_index": "twittermapindex"}], "total": 4, "max_score": 0.57081455}, "_shards": {"successful": 5, "failed": 0, "total": 5}, "took": 8, "timed_out": false};
 var infowindow = '';
 // init Google map
 function initMap() {
@@ -13,23 +12,6 @@ function initMap() {
   infowindow = new google.maps.InfoWindow({});
 
 }
-
-
-/*  flask passes in a list of objects in the following
-	format: 
-	body = {
-			"id": id,
-			"longitude": longitude,
-			"latitude": latitude,
-			"message": tweet,
-			"author": author,
-			"timestamp": timestamp
-		}
-	
-	take this list,
-	take their latitudes & longitudes, 
-	for each of them, 
-		mark more than one locations by them */
 
 function load_tweet(list) {
 	var object_list = list.hits.hits; 
@@ -84,12 +66,11 @@ function get_type(thing){
 function search_by_keyword() {
 	var selected_key = $('#selected_keyword').value;
 	console.log("in search_by_keyword");
+	console.log(selected_key)
 	console.log(selected_keyword.value);
-	console.log(get_type(selected_keyword.outerHTML));
 	$.ajax({
-		url: 'localhost:5000/search/' + selected_keyword,
+		url: 'localhost:5000/search/' + selected_keyword.value,
 		type: 'GET',
-		// data:; // what we pass into the search function
 		success: function(response) {
 			console.log(JSON.stringify(response));
 			load_tweet(response);
@@ -117,9 +98,9 @@ $(document).ready(function() {
 		clearMarkers();
 		console.log("inside form function 2");
 		// when submit is hit, make ajax call, get tweet
-		//	search_by_keyword(); don't call. I cannot get anything yet
+		search_by_keyword();
 		// load tweets
-		load_tweet(sample);
+		// load_tweet(sample);
 
 		// if hover, show messages
 
