@@ -1,13 +1,18 @@
 import tweepy
 import json
+import ConfigParser
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 from TweetHandler import TwitterHandler
 
-consumerKey="CPZFTDBHjLW7ZNXcvPLkB063f"
-consumerSecret="2aiO9j6alC0wKWYOLTmNbo8wCGpRGu0O4QHWAork70gYCZMEk4"
-accessToken="786036603332329472-GVyUTbel8v80MlM3iii5QhZuGL1biO0"
-accessSecret="5d2Knn1NyR5Vfzsk1VSKziPubURmn7AXzOs6LOeZO96Dl"
+config = ConfigParser.ConfigParser()
+config.readfp(open(r'./configurations.txt'))
+
+consumerKey=config.get('API Keys', 'consumerKey')
+consumerSecret=config.get('API Keys', 'consumerSecret')
+accessToken=config.get('API Keys', 'accessToken')
+accessSecret=config.get('API Keys', 'accessSecret')
+
 KEYWORDS = ['chelsea', 'premier', 'pokemon', 'fruit', 'food', 'coffee', 'pizza', 'california']
 REQUEST_LIMIT = 420
 
