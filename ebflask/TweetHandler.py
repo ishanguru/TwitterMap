@@ -9,7 +9,7 @@ class TwitterHandler:
 		self.index = "twittermapindex"
 		self.doc_type = "alltweets"
 
-	def getTweet(self, keyword):
+	def getTweets(self, keyword):
 		body = {
 			"query": {
 				"match": {
@@ -53,7 +53,7 @@ if __name__ == '__main__':
 	# timestamp = None
 
 	# print(tweetHandler.insertTweet(tweetId, final_longitude, final_latitude, tweet, author, timestamp))
-	print(tweetHandler.getTweet("coffee"))
+	print(tweetHandler.getTweets("coffee"))
 
 	# print("Inserted")
 '''

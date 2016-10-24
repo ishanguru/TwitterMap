@@ -1,5 +1,6 @@
+import json
 from flask import Flask
-from twitter_stream import *
+from TweetListener import *
 from TweetHandler import TwitterHandler
 
 # function that pulls tweets from twitter
@@ -17,12 +18,13 @@ def api_root():
 def searchKeyword(keyword):
     searchTweets = TwitterHandler()
     result = searchTweets.getTweets(keyword)
-    return result
+    # print(result)
+    return json.dumps(result)
 
 # run the app.
 if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be
     # removed before deploying a production app.
-    startTwitterRequests()
-    application.debug = True
-    application.run()
+    # startTwitterRequests()
+    app.debug = True
+    app.run()

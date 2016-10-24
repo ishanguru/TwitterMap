@@ -23,8 +23,8 @@ class TweetListener(StreamListener):
 
     def on_error(self, status):
         errorMessage = "Error - Status code " + str(status)
-        if status == 420:
-            exit()
+        # if status == 420:
+        #     exit()
         print(errorMessage)
 
 def parse_data(data):
@@ -63,13 +63,18 @@ def startStream():
 
     auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
     auth.set_access_token(accessToken, accessSecret)
-    twitterStream = Stream(auth, TweetListener())
-    # twitterStream.filter(locations=[-180,-90, 180, 90])
-    twitterStream.filter(track=KEYWORDS)
+    while True:
+        try:
+            twitterStream = Stream(auth, TweetListener())
+            twitterStream.filter(track=KEYWORDS)
+        except:
+            print("Restarting Stream")
+            continue
 
     #The location specified above gets all tweets, we can then filter and store based on what we want
-'''
+
 # For testing purposes only
+'''
 if __name__ == '__main__':
     while True:
         try:
