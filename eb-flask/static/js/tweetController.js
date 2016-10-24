@@ -1,7 +1,8 @@
 var map = "";
 var marker_list = [];
 var infowindow = '';
-// init Google map
+
+// Initialize Google map
 function initMap() {
   var nyc = {lat: 40.7128, lng: -74.0059}; 
   map = new google.maps.Map(document.getElementById('map'), {
@@ -16,17 +17,16 @@ function initMap() {
 function load_tweet(list) {
 	var object_list = list.hits.hits; 
 	console.log(JSON.stringify(object_list));
-	// console.log(sample);
 	for (var i = 0; i < object_list.length; i++) {
 		curr_latitude = object_list[i]._source.latitude;
 		curr_longitude = object_list[i]._source.longitude;
 		console.log("latitude: " + curr_latitude);
 		console.log("longitude: " + curr_longitude);
-		drop_maker(curr_latitude, curr_longitude, object_list[i]._source);
+		drop_marker(curr_latitude, curr_longitude, object_list[i]._source);
 	}
 }
 
-function drop_maker(latitude, longitude, source_object) {
+function drop_marker(latitude, longitude, source_object) {
 	console.log("in drop_maker");
 	var curr_lat_and_lng = {lat: latitude, lng: longitude};
 	var new_marker = new google.maps.Marker({
@@ -65,9 +65,7 @@ function get_type(thing){
 
 function search_by_keyword() {
 	var selected_key = $('#selected_keyword').value;
-	console.log("in search_by_keyword");
-	console.log(selected_key)
-	console.log(selected_keyword.value);
+    //Here is where the ajax call is made i.e. where we then call the endpoint associated with the search function
 	$.ajax({
 		url: '/search/' + selected_keyword.value,
 		type: 'GET',
@@ -88,6 +86,7 @@ function clearMarkers(){
     }
 }
 
+//Here is where, when we hit submit on the form, we get the keyword the user selected
 $(document).ready(function() {
 	initMap();
 	console.log("after init_map");
@@ -99,10 +98,7 @@ $(document).ready(function() {
 		console.log("inside form function 2");
 		// when submit is hit, make ajax call, get tweet
 		search_by_keyword();
-		// load tweets
-		// load_tweet(sample);
 
-		// if hover, show messages
 
 	}, false);
 

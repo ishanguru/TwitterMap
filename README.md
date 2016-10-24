@@ -2,10 +2,6 @@
 
 A simple way to analyze word densities around the world
 
-# To Do (Backend):
+# Link
 
- - Connect to twitter API + stream data (DONE)
- - Parse response + create specialized object for each tweet (DONE)
- - Enable ElasticSearch capabilities + store objects in ES
- - RESTful endpoints to retrieve objects from ES
- - RESTful endpoints to start/stop + clear streams per search word/phrase
+Access the map on: http://tweet-env.c7y7gpdrtu.us-west-2.elasticbeanstalk.com/
