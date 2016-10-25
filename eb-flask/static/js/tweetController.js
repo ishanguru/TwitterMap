@@ -1,4 +1,5 @@
 var map = "";
+var markerCluster;
 var marker_list = [];
 var infowindow = '';
 
@@ -9,9 +10,7 @@ function initMap() {
     zoom: 4,
     center: nyc
   });
-
   infowindow = new google.maps.InfoWindow({});
-
 }
 
 function load_tweet(list) {
@@ -24,6 +23,9 @@ function load_tweet(list) {
 		console.log("longitude: " + curr_longitude);
 		drop_marker(curr_latitude, curr_longitude, object_list[i]._source);
 	}
+    //TODO For some reason, when you zoom in to the cluster, it never breaks down a two-cluster to show you the individual markers
+    markerCluster = new MarkerClusterer(map, marker_list,
+        {imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'});
 }
 
 function drop_marker(latitude, longitude, source_object) {
@@ -31,7 +33,6 @@ function drop_marker(latitude, longitude, source_object) {
 	var curr_lat_and_lng = {lat: latitude, lng: longitude};
 	var new_marker = new google.maps.Marker({
     	position: curr_lat_and_lng,
-    	//animation: google.maps.Animation.DROP,
     	map: map
   	});
   	new_marker.addListener('click', function() {
@@ -39,6 +40,7 @@ function drop_marker(latitude, longitude, source_object) {
   		infowindow.open(map, new_marker);
   	});
   	marker_list.push(new_marker);
+
 }
 
 function toggleMarker(source_object) {
@@ -98,8 +100,6 @@ $(document).ready(function() {
 		console.log("inside form function 2");
 		// when submit is hit, make ajax call, get tweet
 		search_by_keyword();
-
-
 	}, false);
 
 });
