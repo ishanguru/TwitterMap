@@ -10,11 +10,12 @@
 		<!-- load Google map-->
 		<div id="map"></div>
 		<!-- keyword select form -->
-		<form class="form-horizontal" id="keyword_select_form">
+		<form class="form-horizontal ui-draggable" id="keyword_select_form" draggable=true>
   		<fieldset>
   			<h5><b>Tweet Map</b></h5>
     		<div class="form-group">
-      			<label for="select" class="col-sm-2 control-label" style="font-size:115%;">Key_Word</label>
+          <div class="row">
+      			<label for="select" class="col-sm-2 control-label" id="keyword_label">Key Word</label>
       			<div class="col-sm-10" id="drop-down_select">
         			<select class="form-control" id="selected_keyword">
           				<option selected="selected">chelsea</option>
@@ -27,19 +28,28 @@
           				<option>california</option>
         			</select>
       			</div>
-    		</div>
-    		<div class="form-group">
+    		  </div>
+          <div class="form-group">
+            <label for="select" class="col-sm-2 control-label" id="keyword_label" >Distance</label>
+            <div class="col-sm-10" id="drop-down_select">
+              <select class="form-control" id="selected_keyword">
+                  <option selected="selected">1</option>
+                  <option>5</option>
+                  <option>10</option>
+                  <option>20</option>
+              </select>
+            </div>
+          </div>
       			<div class="col-sm-10 col-sm-offset-2" id="buttons">
         			<button type="reset" class="btn btn-default">Cancel</button>
-        			<button type="submit" class="btn btn-primary">Submit</button>
-      			</div>
-    		</div>
+        			<button type="submit" class="btn btn-primary">Submit</button> 
+      		  </div>
   		</fieldset>
         <span id="warning"></span>
 		</form>
         <span id='testing'><span>
 		<script src="../static/js/tweetController.js"></script>
-            <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
+    <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js"></script>
 		<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCfLyBKivYy0v-7sdMtqmpO2cK92X8n-a4&callback=initMap"></script>
 	</body>
 </html>

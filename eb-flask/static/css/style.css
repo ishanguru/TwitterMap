@@ -7,8 +7,8 @@ body,
  }
 
 #keyword_select_form {
-	width: 27%;
-	height: 26%;
+	width: 23%;
+	/* height: 30%; */
 	position: absolute;
 	top: 1%;
 	right: 1%;
@@ -27,5 +27,15 @@ body,
 }
 
 #buttons {
-	margin-left: 20%;
+	display: inline-block;
+	margin-left: 5%;
+	position: relative;
+	text-align: center;
+
+}
+
+#keyword_label {
+	font-size:115%;
+	white-space: nowrap;
+	margin-left: 10%;
 }
