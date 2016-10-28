@@ -110,7 +110,6 @@ function search_by_keyword() {
 		url: '/search/' + selected_keyword.value,
 		type: 'GET',
 		success: function(response) {
-			// console.log(JSON.stringify(response));
 			load_tweet(response);
 		},
 		error: function(error) {
@@ -150,13 +149,8 @@ $(document).ready(function() {
 
 	document.getElementById('keyword_select_form').addEventListener('submit', function (e) {
 		e.preventDefault();
-		// add remove_marker function here
 		clearMarkers();
-		// when submit is hit, make ajax call, get tweet
 		search_by_keyword();
-
-		/* for local ui testing */
-		// load_tweet(json_sample);
 
 	}, false);
 

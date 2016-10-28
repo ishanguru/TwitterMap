@@ -6,8 +6,8 @@ class TwitterHandler:
 	
 	def __init__(self):
 		self.es = ElasticSearchServices()
-		self.index = "twittermapindex"
-		self.doc_type = "alltweets"
+		self.index = "geospatialtwittermapindex"
+		self.doc_type = "geospatialtweets"
 
 	def getTweets(self, keyword):
 		body = {
@@ -24,22 +24,24 @@ class TwitterHandler:
 		return result
 
 	def getTweetsWithDistance(self, keyword, distance, latitude, longitude):
+		distance_string = distance + 'km'
+		print distance_string
 		body = {
 			"query": {
 				"match": {
 					"_all": keyword
 				}
 			},
-			"filter": {
-				"geo_distance": {
-					"distance": distance,
-					"distance_type": "arc",
-					"location": {
-						"lat": latitude,
-						"lon": longitude
-					}
-				}
-			}
+            "filter": {
+                "geo_distance": {
+                    "distance": distance_string,
+                    "distance_type": "sloppy_arc",
+                    "location": {
+                        "lat": latitude,
+                        "lon": longitude
+                    }
+                }
+            }
 		}
 
 		size = 10000
@@ -55,10 +57,13 @@ class TwitterHandler:
 			"message": tweet,
 			"author": author,
 			"timestamp": timestamp,
-			"location": {
-				"lat": latitude,
-				"lon": longitude
-			}
+            # "properties": {
+                "location": {
+                    # "type": "geo_point"
+                    "lat": latitude,
+                    "lon": longitude
+                }
+            # }
 		}
 
 		result = self.es.store_data(self.index, self.doc_type, body)
