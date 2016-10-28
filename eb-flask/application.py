@@ -25,6 +25,12 @@ def searchKeyword(keyword):
     result = searchTweets.getTweets(keyword)
     return jsonify(result)
 
+@application.route('/search/<keyword>/<distance>/<latitude>/<longitude>')
+def searchKeywordWithDistance(keyword, distance, latitude, longitude):
+    searchTweets = TwitterHandler()
+    result = searchTweets.getTweetsWithDistance(keyword, distance, latitude, longitude)
+    return jsonify(result)
+
 # run the app.
 if __name__ == "__main__":
     # Setting debug to True enables debug output. This line should be

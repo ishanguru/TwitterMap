@@ -23,6 +23,30 @@ class TwitterHandler:
 
 		return result
 
+	def getTweetsWithDistance(self, keyword, distance, latitude, longitude):
+		body = {
+			"query": {
+				"match": {
+					"_all": keyword
+				}
+			},
+			"filter": {
+				"geo_distance": {
+					"distance": distance,
+					"distance_type": "arc",
+					"location": {
+						"lat": latitude,
+						"lon": longitude
+					}
+				}
+			}
+		}
+
+		size = 10000
+		result = self.es.search(self.index, self.doc_type, body, size)
+
+		return result
+
 	def insertTweet(self, id, longitude, latitude, tweet, author, timestamp):
 		body = {
 			"id": id,
@@ -30,7 +54,11 @@ class TwitterHandler:
 			"latitude": latitude,
 			"message": tweet,
 			"author": author,
-			"timestamp": timestamp
+			"timestamp": timestamp,
+			"location": {
+				"lat": latitude,
+				"lon": longitude
+			}
 		}
 
 		result = self.es.store_data(self.index, self.doc_type, body)
