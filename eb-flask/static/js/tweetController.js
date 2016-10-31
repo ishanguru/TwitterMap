@@ -1,6 +1,3 @@
-/* for local ui testing */
-// var json_sample = {"hits": {"hits": [{"_score": 0.57081455, "_type": "alltweets", "_id": "AVf0NMCuW2-3j40lpB7-", "_source": {"author": "Putu Sukarata", "timestamp": "Mon Oct 24 01:01:20 +0000 2016", "longitude": 115.06630249999999, "latitude": -8.440309, "message": "Morning...cup a coffee", "id": "790357471692853248"}, "_index": "twittermapindex"}, {"_score": 0.40772468, "_type": "alltweets", "_id": "AVf0MprLW2-3j40lpB72", "_source": {"author": "Sareena", "timestamp": "Mon Oct 24 00:58:59 +0000 2016", "longitude": -79.861034, "latitude": 35.1704985, "message": "Having low coffee funds is a good reason to cut back this week. I really thought that $60 on my card would last more than a week. Damn", "id": "790356881101520896"}, "_index": "twittermapindex"}, {"_score": 0.3728585, "_type": "alltweets", "_id": "AVf0QR-bW2-3j40lpB8O", "_source": {"author": "jasmin \u2741 s\u00f8sa", "timestamp": "Mon Oct 24 01:14:50 +0000 2016", "longitude": -84.433106, "latitude": 33.7671945, "message": "when ur @DunkinDonuts iced coffee tastes like straight UP sweet tea/rotten milk & ur bagel tastes like PLAYDOH. y have u forsaken me dd???!!", "id": "790360871600087040"}, "_index": "twittermapindex"}, {"_score": 0.3728585, "_type": "alltweets", "_id": "AVf0QY88W2-3j40lpB8V", "_source": {"author": "B e t h y", "timestamp": "Mon Oct 24 01:15:19 +0000 2016", "longitude": 150.931975, "latitude": -33.848244, "message": "Love knowing that ever time I order a coffee it's going to be good!! #whyisithardtogetgoodcoffeeintheuk \ud83e\udd14", "id": "790360992089649152"}, "_index": "twittermapindex"}], "total": 4, "max_score": 0.57081455}, "_shards": {"successful": 5, "failed": 0, "total": 5}, "took": 8, "timed_out": false};
-
 var map = "";
 var markerCluster;
 var marker_list = [];
@@ -23,8 +20,8 @@ function load_tweet(list) {
 	var object_list = list.hits.hits; 
 	console.log(JSON.stringify(object_list));
 	for (var i = 0; i < object_list.length; i++) {
-		curr_latitude = object_list[i]._source.latitude;
-		curr_longitude = object_list[i]._source.longitude;
+		curr_latitude = object_list[i]._source.location[1];
+		curr_longitude = object_list[i]._source.location[0];
 		drop_marker(curr_latitude, curr_longitude, object_list[i]._source);
 	}
     /*
@@ -84,6 +81,7 @@ function get_type(thing){
 }
 
 function search_by_geo_distance(latitude, longitude) {
+	clearMarkers();
     var selected_key = $('#selected_keyword').value;
 	var selected_dist = $('#selected_distance').value;
     //Here is where the ajax call is made i.e. where we then call the endpoint associated with the search function

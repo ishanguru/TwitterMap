@@ -4,6 +4,7 @@ import ConfigParser
 from tweepy import Stream
 from tweepy.streaming import StreamListener
 from TweetHandler import TwitterHandler
+from ElasticSearchServices import ElasticSearchServices
 
 config = ConfigParser.ConfigParser()
 config.readfp(open(r'./configurations.txt'))
@@ -15,6 +16,37 @@ accessSecret=config.get('API Keys', 'accessSecret')
 
 KEYWORDS = ['chelsea', 'premier', 'pokemon', 'fruit', 'food', 'coffee', 'pizza', 'california']
 REQUEST_LIMIT = 420
+
+collection = {
+	"mappings": {
+		"finaltweets2": {
+			"properties": {
+				"id": {
+					"type": "string"
+				},
+				"message": {
+					"type": "string"
+				},
+				"author": {
+					"type": "string"
+				},
+				"timestamp": {
+					"type": "string"
+				},
+				"location": {
+					"type": "geo_point"
+				}
+			}
+		}
+	}
+}
+
+index = "finaltwittermapindex5"
+try:
+    collection_service = ElasticSearchServices()
+    collection_service.create_collection(index, collection)
+except:
+    print "Index already created"
 
 class TweetListener(StreamListener):
 
@@ -64,7 +96,11 @@ def parse_data(data):
     author = json_data_file["user"]["name"]
     timestamp = json_data_file["created_at"]
 
-    print(tweetHandler.insertTweet(tweetId, final_longitude, final_latitude, tweet, author, timestamp))
+    location_data = [final_longitude, final_latitude]
+    try:
+        print(tweetHandler.insertTweet(tweetId, location_data, tweet, author, timestamp))
+    except:
+        print("Failed to insert tweet")
 
 def startStream():
 

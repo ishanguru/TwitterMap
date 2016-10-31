@@ -10,6 +10,8 @@ PORT=config.get('ES Instance', 'PORT')
 USERNAME=config.get('ES Instance', 'USERNAME')
 PASSWORD=config.get('ES Instance', 'PASSWORD')
 
+# index = "finaltwittermapindex2"
+
 class ElasticSearchServices:
 
     def __init__(self):
@@ -26,6 +28,14 @@ class ElasticSearchServices:
     			body=body
     		)
 
+        return results
+
+    def create_collection(self, index, body):
+        print "Creating collection..."
+        results = self.es.indices.create(
+            index=index,
+            body=body
+        )
         return results
 
     def search(self, index, doc_type, body, size):
