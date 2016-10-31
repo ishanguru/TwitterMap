@@ -46,14 +46,17 @@ function drop_marker(latitude, longitude, source_object) {
 
 function placeMarker(location) {
     clearGeoTags();
+    var markerColor = '0000FF';
+    var markerImage = new google.maps.MarkerImage(
+        "http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|" + markerColor,
+        new google.maps.Size(80, 400),
+        new google.maps.Point(0,0),
+        new google.maps.Point(10, 34));
     var marker = new google.maps.Marker({
         position: location,
         map: map,
         title: "Tweets around this area",
-        icon: {
-            path: google.maps.SymbolPath.CIRCLE,
-            scale: 5
-        },
+        icon: markerImage
     });
     geo_latitude = marker.getPosition().lat();
     geo_longitude = marker.getPosition().lng();
